@@ -1,0 +1,8 @@
+FROM scratch
+# FROM busybox
+
+ADD rootfs.tar /
+
+ADD mqtt_demo /
+
+ENTRYPOINT ["/mqtt_demo"]

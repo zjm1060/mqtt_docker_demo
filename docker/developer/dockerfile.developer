@@ -1,0 +1,19 @@
+FROM ubuntu:20.04
+
+RUN sed -i 's@http://.*ubuntu.com@http://repo.huaweicloud.com@g' /etc/apt/sources.list
+
+RUN apt update && \
+   apt install -y rsync locales openssh-server gdbserver libmosquitto-dev libmosquittopp-dev && \
+   echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
+   echo "root:root" | chpasswd 
+
+# RUN apt update && apt install -y -f   
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8  
+
+ADD docker-entrypoint.sh /
+
+WORKDIR /root
+
+ENTRYPOINT  ["/docker-entrypoint.sh"]
